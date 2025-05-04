@@ -4,7 +4,7 @@ import { AuthRegisterDto } from '../models/registerDto';
 import { AuthLoginDto } from '../models/loginDto';
 import { AddressDto } from 'src/api-usuarios/models/AdressDto';
 import { UserUpdateDto } from 'src/api-usuarios/models/updateUserDto';
-import { AuthGuard } from '../service/auth.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 
 @Controller('usuarios')
 export class UsuariosController {

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, Query, UseGuards } from '@nestjs/common';
 import { ProductosService } from '../service/productos.service';
 import { CategoriaDto } from 'src/api-productos/models/categoria.dto';
-import { AuthGuard } from '../../api-usuarios/service/auth.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 
 @Controller('productos')
 export class ProductosController {

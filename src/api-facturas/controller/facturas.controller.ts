@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
 import { FacturasService } from '../service/facturas.service';
 import { FacturaDto } from '../models/productoFacturaDto';
-import { AuthGuard } from '../../api-usuarios/service/auth.guard';
+import { AuthGuard } from '../../auth/guards/auth.guard';
 
 @Controller('facturas')
 export class FacturasController {
