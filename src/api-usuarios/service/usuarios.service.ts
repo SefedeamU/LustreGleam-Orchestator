@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 
-import { AuthRegisterDto } from '../../models/registerDto';
-import { AuthLoginDto } from '../../models/loginDto';
-import { UserOutDto } from '../../models/responseOutDto';
-import { UserUpdateDto } from '../../models/updateUserDto';
-import { AddressDto } from '../../models/AdressDto';
+import { AuthRegisterDto } from '../models/registerDto';
+import { AuthLoginDto } from '../models/loginDto';
+import { UserOutDto } from '../models/responseOutDto';
+import { UserUpdateDto } from '../models/updateUserDto';
+import { AddressDto } from '../models/AdressDto';
 
 @Injectable()
 export class UsuariosService {
@@ -95,6 +95,19 @@ export class UsuariosService {
         return response.data;
         } catch (error) {
         throw new Error(`Error al agregar o actualizar la dirección del usuario con ID ${userId}: ${error.response?.data?.message || error.message}`);
+        }
+    }
+
+    
+    // Verificar token con un guard
+    async verificarToken(token: string): Promise<{ valid: boolean; user_id: string }> {
+        try {
+        const response = await lastValueFrom(
+            this.httpService.post(`${this.authUrl}/verify-token`, { token }),
+        );
+        return response.data;
+        } catch (error) {
+        throw new Error(`Error al verificar el token: ${error.response?.data?.message || error.message}`);
         }
     }
 }

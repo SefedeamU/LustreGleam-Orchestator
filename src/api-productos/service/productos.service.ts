@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 
-import { ProductoDto } from '../../models/product.dto';
-import { CategoriaDto } from '../../models/categoria.dto';
+import { ProductoDto } from '../models/product.dto';
+import { CategoriaDto } from '../models/categoria.dto';
 
 @Injectable()
 export class ProductosService {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
-import { FacturaDto } from '../../models/productoFacturaDto';
+import { FacturaDto } from '../models/productoFacturaDto';
 
 @Injectable()
 export class FacturasService {
