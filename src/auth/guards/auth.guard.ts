@@ -9,6 +9,7 @@ export class AuthGuard implements CanActivate {
         const request = context.switchToHttp().getRequest();
         const authHeader = request.headers['authorization'];
         console.log('Auth Header:', authHeader);
+        console.log('Request Headers:', request.headers);
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             throw new UnauthorizedException('Token no proporcionado o inválido');
         }
