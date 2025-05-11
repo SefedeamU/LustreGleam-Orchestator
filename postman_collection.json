@@ -1,0 +1,260 @@
+{
+    "info": {
+        "name": "Orchestator API",
+        "_postman_id": "orchestator-api-collection",
+        "description": "Colección para probar los endpoints de Usuarios, Productos y Facturas",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+        "name": "Usuarios",
+        "item": [
+            {
+            "name": "Registrar Usuario",
+            "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Juan\",\n  \"mail\": \"juan@mail.com\",\n  \"telefono\": \"123456789\",\n  \"password\": \"1234\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/usuarios/register", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["usuarios", "register"] }
+            }
+            },
+            {
+            "name": "Login Usuario",
+            "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"mail\": \"juan@mail.com\",\n  \"password\": \"1234\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/usuarios/login", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["usuarios", "login"] }
+            }
+            },
+            {
+            "name": "Obtener Usuarios",
+            "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/usuarios", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["usuarios"] }
+            }
+            },
+            {
+            "name": "Obtener Usuario por ID",
+            "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/usuarios/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["usuarios", "1"] }
+            }
+            },
+            {
+            "name": "Actualizar Usuario",
+            "request": {
+                "method": "PUT",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"name\": \"Juan Actualizado\",\n  \"telefono\": \"987654321\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/usuarios/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["usuarios", "1"] }
+            }
+            },
+            {
+            "name": "Eliminar Usuario",
+            "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/usuarios/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["usuarios", "1"] }
+            }
+            },
+            {
+            "name": "Agregar/Actualizar Dirección",
+            "request": {
+                "method": "POST",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"direccion\": \"Calle 123, Ciudad\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/usuarios/1/address", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["usuarios", "1", "address"] }
+            }
+            }
+        ]
+        },
+        {
+        "name": "Productos",
+        "item": [
+            {
+            "name": "Obtener Productos",
+            "request": {
+                "method": "GET",
+                "url": { "raw": "http://localhost:8003/productos", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos"] }
+            }
+            },
+            {
+            "name": "Obtener Producto por ID",
+            "request": {
+                "method": "GET",
+                "url": { "raw": "http://localhost:8003/productos/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos", "1"] }
+            }
+            },
+            {
+            "name": "Crear Producto",
+            "request": {
+                "method": "POST",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombre\": \"Producto Nuevo\",\n  \"precio\": 100\n}"
+                },
+                "url": { "raw": "http://localhost:8003/productos", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos"] }
+            }
+            },
+            {
+            "name": "Actualizar Producto",
+            "request": {
+                "method": "PUT",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombre\": \"Producto Actualizado\",\n  \"precio\": 150\n}"
+                },
+                "url": { "raw": "http://localhost:8003/productos/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos", "1"] }
+            }
+            },
+            {
+            "name": "Eliminar Producto",
+            "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/productos/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos", "1"] }
+            }
+            },
+            {
+            "name": "Obtener Categorías",
+            "request": {
+                "method": "GET",
+                "url": { "raw": "http://localhost:8003/productos/categorias", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos", "categorias"] }
+            }
+            },
+            {
+            "name": "Crear Categoría",
+            "request": {
+                "method": "POST",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombre\": \"Nueva Categoría\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/productos/categorias", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos", "categorias"] }
+            }
+            },
+            {
+            "name": "Actualizar Categoría",
+            "request": {
+                "method": "PUT",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"nombre\": \"Categoría Actualizada\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/productos/categorias/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos", "categorias", "1"] }
+            }
+            },
+            {
+            "name": "Eliminar Categoría",
+            "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/productos/categorias/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["productos", "categorias", "1"] }
+            }
+            }
+        ]
+        },
+        {
+        "name": "Facturas",
+        "item": [
+            {
+            "name": "Listar Facturas",
+            "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/facturas", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["facturas"] }
+            }
+            },
+            {
+            "name": "Crear Factura",
+            "request": {
+                "method": "POST",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"campo1\": \"valor1\",\n  \"campo2\": \"valor2\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/facturas", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["facturas"] }
+            }
+            },
+            {
+            "name": "Obtener Factura por ID",
+            "request": {
+                "method": "GET",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/facturas/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["facturas", "1"] }
+            }
+            },
+            {
+            "name": "Modificar Factura",
+            "request": {
+                "method": "PUT",
+                "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" },
+                { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                "mode": "raw",
+                "raw": "{\n  \"campo1\": \"nuevo valor\"\n}"
+                },
+                "url": { "raw": "http://localhost:8003/facturas/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["facturas", "1"] }
+            }
+            },
+            {
+            "name": "Eliminar Factura",
+            "request": {
+                "method": "DELETE",
+                "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+                "url": { "raw": "http://localhost:8003/facturas/1", "protocol": "http", "host": ["localhost"], "port": "8003", "path": ["facturas", "1"] }
+            }
+            }
+        ]
+        }
+    ],
+    "variable": [
+        {
+        "key": "token",
+        "value": ""
+        }
+    ]
+}
