@@ -9,7 +9,7 @@ services:
       - internal_network
     environment:
       API_USUARIOS : http://api-usuarios:8000
-      API_FACTURA : http://api-factura:8002
+      API_FACTURAS : http://api-factura:8002
       API_PRODUCTOS : http://api-productos:8001
 
 networks:
