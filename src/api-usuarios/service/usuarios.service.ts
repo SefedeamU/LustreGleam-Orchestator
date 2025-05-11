@@ -30,50 +30,53 @@ export class UsuariosService {
             );
             return response.data;
         } catch (error) {
-            // Si viene de FastAPI, propaga el status, mensaje y headers
-            if (error.response) {
+                if (error.response) {
+                    console.log('Error de respuesta:', error.response.data);
+                    console.log('Error de respuesta:', error.response.status);
+                    throw new HttpException(
+                        error.response.data?.detail || error.response.data?.message || 'Error externo',
+                        error.response.status,
+                        {
+                            cause: error,
+                            description: error.response.data?.detail,
+                        }
+                    );
+                }
+                // SIEMPRE lanza HttpException, nunca Error
                 throw new HttpException(
-                    error.response.data?.detail || error.response.data?.message || 'Error externo',
-                    error.response.status,
-                    {
-                        cause: error,
-                        description: error.response.data?.detail,
-
-                    }
+                    error.message || 'Error interno',
+                    500
                 );
             }
-            // Si es otro error, lanza un 500
-            throw new HttpException(
-                error.message || 'Error interno',
-                500
-            );
         }
-    }
 
     // Iniciar sesión
     async iniciarSesion(data: AuthLoginDto): Promise<string> {
-        try {
-        const response = await lastValueFrom(
-            this.httpService.post(`${this.authUrl}/login`, data),
-        );
-        return response.data; // Token de autenticación
-        } catch (error) {
-            if (error.response) {
-                throw new HttpException(
-                    error.response.data?.detail || error.response.data?.message || 'Error externo',
-                    error.response.status,
-                    {
-                        cause: error,
-                        description: error.response.data?.detail,
-                    }
+            try {
+                const response = await lastValueFrom(
+                    this.httpService.post(`${this.authUrl}/login`, data),
                 );
-    }
-    throw new HttpException(
-        error.message || 'Error interno',
-        500
-    );
-}
-    }
+                return response.data;
+            } catch (error) {
+                if (error.response) {
+                    console.log('Error de respuesta:', error.response.data);
+                    console.log('Error de respuesta:', error.response.status);
+                    throw new HttpException(
+                        error.response.data?.detail || error.response.data?.message || 'Error externo',
+                        error.response.status,
+                        {
+                            cause: error,
+                            description: error.response.data?.detail,
+                        }
+                    );
+                }
+                // SIEMPRE lanza HttpException, nunca Error
+                throw new HttpException(
+                    error.message || 'Error interno',
+                    500
+                );
+            }
+        }
 
     // Actualizar un usuario por ID
     async actualizarUsuario(userId: number, data: UserUpdateDto): Promise<UserOutDto> {
@@ -111,15 +114,15 @@ export class UsuariosService {
     
     // Verificar token con un guard
     async verificarToken(token: string): Promise<{ valid: boolean; user_id: string }> {
-    console.log('Enviando a API externa:', { token });
-    try {
-        const response = await lastValueFrom(
-            this.httpService.post(`${this.usersUrl}/verify-token`, { token })
-        );
-        return response.data;
-    } catch (error) {
-        console.error('Respuesta de error:', error.response?.data);
-        throw new Error(`Error al verificar el token: ${error.response?.data?.message || error.message}`);
+        console.log('Enviando a API externa:', { token });
+        try {
+            const response = await lastValueFrom(
+                this.httpService.post(`${this.usersUrl}/verify-token`, { token })
+            );
+            return response.data;
+        } catch (error) {
+            console.error('Respuesta de error:', error.response?.data);
+            throw new Error(`Error al verificar el token: ${error.response?.data?.message || error.message}`);
+        }
     }
-}
 }
