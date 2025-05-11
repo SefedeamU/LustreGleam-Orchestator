@@ -2,13 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 import { FacturaDto } from '../models/productoFacturaDto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class FacturasService {
-    constructor(private readonly httpService: HttpService) {}
 
-    private readonly facturaUrl = 'http://api.facturas.com/factura';
+    private readonly facturaUrl: string;
 
+    constructor(private readonly httpService: HttpService, private configService: ConfigService) {
+            const API_FACTURAS = this.configService.get('API_FACTURAS');
+            this.facturaUrl = `${API_FACTURAS}/factura`;
+        }
     // Listar todas las facturas
     async listarFacturas(): Promise<any> {
         try {
