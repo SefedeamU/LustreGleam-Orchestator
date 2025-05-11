@@ -1,15 +1,16 @@
 services:
   api:
     build: .
+    container_name: api-orquestador
     ports:
       - "8003:8003"
     restart: unless-stopped
     networks:
       - internal_network
     environment:
-      API_USUARIOS : http://34.197.245.3:8000
-      API_FACTURA : http://34.197.245.3:8002
-      API_PRODUCTOS : http://34.197.245.3:8001
+      API_USUARIOS : http://api-usuarios:8000
+      API_FACTURA : http://api-factura_1:8002
+      API_PRODUCTOS : http://api-productos:8001
 
 networks:
   internal_network:
