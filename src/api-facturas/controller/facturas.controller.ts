@@ -1,50 +1,53 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query, Req, UnauthorizedException } from '@nestjs/common';
 import { FacturasService } from '../service/facturas.service';
 import { FacturaDto } from '../models/productoFacturaDto';
-import { AuthGuard } from '../../auth/guards/auth.guard';
+import { UsuariosService } from '../../api-usuarios/service/usuarios.service';
 
-@Controller('facturas')
+@Controller('factura')
 export class FacturasController {
-    constructor(private readonly facturasService: FacturasService) {}
+    constructor(
+        private readonly facturasService: FacturasService,
+        private readonly usuariosService: UsuariosService,
+    ) {}
 
-//NECESARIO MODIFICAR LA MANERA EN QUE SE VERIFICA LA AUTENTICACIÓN, 
-// HAY ENDPOINTS QUE NO DEBERÍAN SER ACCESIBLES SIN AUTENTICACIÓN PERO 
-// TAMBIÉN HAY OTROS ADEMÁS DE ESO PODRÍAN SER ACCESIBLES SOLO PARA EL 
-// CREADOR DE LA FACTURA, NO SOLO PARA LOS ADMINISTRADORES.
-
-
-    // Listar todas las facturas
-    @UseGuards(AuthGuard)
-    @Get()
-    async listarFacturas() {
-        return this.facturasService.listarFacturas();
+    private async verificarTokenOrThrow(req: any) {
+        const authHeader = req.headers['authorization'];
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            throw new UnauthorizedException('Token no proporcionado o inválido');
+        }
+        const token = authHeader.split(' ')[1];
+        const result = await this.usuariosService.verificarToken(token);
+        if (!result.valid) throw new UnauthorizedException('Token inválido o expirado');
+        return result.user_id;
     }
 
-    // Crear una nueva factura
-    @UseGuards(AuthGuard)
     @Post()
-    async crearFactura(@Body() data: FacturaDto) {
+    async crearFactura(@Body() data: FacturaDto, @Req() req) {
+        await this.verificarTokenOrThrow(req);
         return this.facturasService.crearFactura(data);
     }
 
-    // Obtener una factura por ID
-    @UseGuards(AuthGuard)
+    @Get()
+    async listarFacturas(@Query('skip') skip?: number, @Query('limit') limit?: number, @Query('usuario_id') usuario_id?: number, @Req() req?) {
+        await this.verificarTokenOrThrow(req);
+        return this.facturasService.listarFacturas();
+    }
+
     @Get(':id')
-    async obtenerFacturaPorId(@Param('id') id: string) {
+    async obtenerFacturaPorId(@Param('id') id: string, @Req() req) {
+        await this.verificarTokenOrThrow(req);
         return this.facturasService.obtenerFacturaPorId(id);
     }
 
-    // Modificar una factura por ID
-    @UseGuards(AuthGuard)
     @Put(':id')
-    async modificarFactura(@Param('id') id: string, @Body() data: FacturaDto) {
+    async modificarFactura(@Param('id') id: string, @Body() data: FacturaDto, @Req() req) {
+        await this.verificarTokenOrThrow(req);
         return this.facturasService.modificarFactura(id, data);
     }
 
-    // Borrar una factura por ID
-    @UseGuards(AuthGuard)
     @Delete(':id')
-    async borrarFactura(@Param('id') id: string) {
+    async borrarFactura(@Param('id') id: string, @Req() req) {
+        await this.verificarTokenOrThrow(req);
         return this.facturasService.borrarFactura(id);
     }
 }
