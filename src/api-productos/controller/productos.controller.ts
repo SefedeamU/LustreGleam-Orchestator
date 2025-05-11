@@ -8,16 +8,6 @@ export class ProductosController {
     constructor(private readonly productosService: ProductosService) {}
 
     // PRODUCTOS
-    @Get()
-    async obtenerProductos() {
-        return this.productosService.obtenerProductos();
-    }
-
-    @Get(':id')
-    async obtenerProductoPorId(@Param('id') id: number) {
-        return this.productosService.obtenerProductoPorId(id);
-    }
-
     @UseGuards(AuthGuard)
     @Post()
     async crearProducto(@Body() producto: any) {
@@ -36,17 +26,7 @@ export class ProductosController {
         return this.productosService.eliminarProducto(id);
     }
 
-    @Get('categoria')
-    async obtenerProductosPorCategoria(@Query('categoriaId') categoriaId: number) {
-        return this.productosService.obtenerProductosPorCategoria(categoriaId);
-    }
-
     // CATEGORÍAS
-    @Get('categorias')
-    async obtenerCategorias() {
-        return this.productosService.obtenerCategorias();
-    }
-
     @UseGuards(AuthGuard)
     @Post('categorias')
     async crearCategoria(@Body() categoria: CategoriaDto) {
@@ -65,3 +45,22 @@ export class ProductosController {
         return this.productosService.eliminarCategoria(id);
     }
 }
+
+/*
+    @Get('categoria')
+    async obtenerProductosPorCategoria(@Query('categoriaId') categoriaId: number) {
+        return this.productosService.obtenerProductosPorCategoria(categoriaId);
+    }    @Get()
+    async obtenerProductos() {
+        return this.productosService.obtenerProductos();
+    }
+
+    @Get(':id')
+    async obtenerProductoPorId(@Param('id') id: number) {
+        return this.productosService.obtenerProductoPorId(id);
+    }
+    @Get('categorias')
+    async obtenerCategorias() {
+        return this.productosService.obtenerCategorias();
+    }
+*/

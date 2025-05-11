@@ -1,0 +1,12 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8003:8003"
+    restart: unless-stopped
+    networks:
+      - internal_network
+    environment:
+      - API_USUARIOS: dsa
+      - API_FACTURAS: dsa
+      - API_PRODUCTOS: sad

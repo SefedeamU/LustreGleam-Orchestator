@@ -7,13 +7,19 @@ import { AuthLoginDto } from '../models/loginDto';
 import { UserOutDto } from '../models/responseOutDto';
 import { UserUpdateDto } from '../models/updateUserDto';
 import { AddressDto } from '../models/AdressDto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsuariosService {
-    constructor(private readonly httpService: HttpService) {}
+    
+    constructor(private readonly httpService: HttpService, private configService: ConfigService) {
+        const API_USUARIOS = this.configService.get('API_USUARIOS');
+        this.authUrl = `${API_USUARIOS}/auth`;
+        this.usersUrl = `${API_USUARIOS}/users`;
+    }
 
-    private readonly authUrl = 'http://CAMBIAR/auth';
-    private readonly usersUrl = 'http://CAMBIAR/users';
+    private readonly authUrl : string;
+    private readonly usersUrl : string;
 
 //AUTH
     // Registrar usuario
