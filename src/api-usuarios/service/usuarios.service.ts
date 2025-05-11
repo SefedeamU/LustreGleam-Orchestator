@@ -46,31 +46,6 @@ export class UsuariosService {
         }
     }
 
-//USUARIOS
-    // Obtener todos los usuarios
-    async obtenerUsuarios(skip = 0, limit = 10): Promise<UserOutDto[]> {
-        try {
-        const response = await lastValueFrom(
-            this.httpService.get(`${this.usersUrl}/users`, { params: { skip, limit } }),
-        );
-        return response.data;
-        } catch (error) {
-        throw new Error(`Error al obtener usuarios: ${error.response?.data?.message || error.message}`);
-        }
-    }
-
-    // Obtener un usuario por ID
-    async obtenerUsuarioPorId(userId: number): Promise<UserOutDto> {
-        try {
-        const response = await lastValueFrom(
-            this.httpService.get(`${this.usersUrl}/users/${userId}`),
-        );
-        return response.data;
-        } catch (error) {
-        throw new Error(`Error al obtener el usuario con ID ${userId}: ${error.response?.data?.message || error.message}`);
-        }
-    }
-
     // Actualizar un usuario por ID
     async actualizarUsuario(userId: number, data: UserUpdateDto): Promise<UserOutDto> {
         try {

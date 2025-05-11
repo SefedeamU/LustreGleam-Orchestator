@@ -13,25 +13,6 @@ export class ProductosService {
     private readonly categoriasUrl = 'http://CAMBIAR/categorias';
 
 //PRODUCTOS
-    // Obtener todos los productos
-    async obtenerProductos(): Promise<ProductoDto[]> {
-        try {
-        const response = await lastValueFrom(this.httpService.get(this.productoUrl));
-        return response.data;
-        } catch (error) {
-        throw new Error(`Error al obtener productos: ${error.response?.data?.message || error.message}`);
-        }
-    }
-
-    // Obtener un producto por ID
-    async obtenerProductoPorId(id: number): Promise<ProductoDto> {
-        try {
-        const response = await lastValueFrom(this.httpService.get(`${this.productoUrl}/${id}`));
-        return response.data;
-        } catch (error) {
-        throw new Error(`Error al obtener el producto con ID ${id}: ${error.response?.data?.message || error.message}`);
-        }
-    }
 
     // Crear un nuevo producto
     async crearProducto(producto: ProductoDto): Promise<ProductoDto> {
@@ -62,29 +43,7 @@ export class ProductosService {
         }
     }
 
-    // Obtener productos por categoría
-    async obtenerProductosPorCategoria(categoriaId: number): Promise<ProductoDto[]> {
-        try {
-        const response = await lastValueFrom(
-            this.httpService.get(`${this.productoUrl}/categoria`, { params: { categoriaId } }),
-        );
-        return response.data;
-        } catch (error) {
-        throw new Error(`Error al obtener productos de la categoría ${categoriaId}: ${error.response?.data?.message || error.message}`);
-        }
-    }
-
 //CATEGORIAS
-    // Obtener todas las categorías
-    async obtenerCategorias(): Promise<CategoriaDto[]> {
-        try {
-        const response = await lastValueFrom(this.httpService.get(this.categoriasUrl));
-        return response.data;
-        } catch (error) {
-        throw new Error(`Error al obtener categorías: ${error.response?.data?.message || error.message}`);
-        }
-    }
-
     // Crear una nueva categoría
     async crearCategoria(categoria: CategoriaDto): Promise<CategoriaDto> {
         try {
