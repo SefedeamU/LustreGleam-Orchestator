@@ -107,13 +107,15 @@ export class UsuariosService {
     
     // Verificar token con un guard
     async verificarToken(token: string): Promise<{ valid: boolean; user_id: string }> {
-        try {
+    console.log('Enviando a API externa:', { token });
+    try {
         const response = await lastValueFrom(
-            this.httpService.post(`${this.usersUrl}/verify-token`, { token }),
+            this.httpService.post(`${this.usersUrl}/verify-token`, { token })
         );
         return response.data;
-        } catch (error) {
+    } catch (error) {
+        console.error('Respuesta de error:', error.response?.data);
         throw new Error(`Error al verificar el token: ${error.response?.data?.message || error.message}`);
-        }
     }
+}
 }
