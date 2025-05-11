@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 
@@ -25,12 +25,28 @@ export class UsuariosService {
     // Registrar usuario
     async registrarUsuario(data: AuthRegisterDto): Promise<UserOutDto> {
         try {
-        const response = await lastValueFrom(
-            this.httpService.post(`${this.authUrl}/register`, data),
-        );
-        return response.data;
+            const response = await lastValueFrom(
+                this.httpService.post(`${this.authUrl}/register`, data),
+            );
+            return response.data;
         } catch (error) {
-        throw new Error(`Error al registrar usuario: ${error.response?.data?.message || error.message}`);
+            // Si viene de FastAPI, propaga el status, mensaje y headers
+            if (error.response) {
+                throw new HttpException(
+                    error.response.data?.detail || error.response.data?.message || 'Error externo',
+                    error.response.status,
+                    {
+                        cause: error,
+                        description: error.response.data?.detail,
+
+                    }
+                );
+            }
+            // Si es otro error, lanza un 500
+            throw new HttpException(
+                error.message || 'Error interno',
+                500
+            );
         }
     }
 
@@ -42,8 +58,21 @@ export class UsuariosService {
         );
         return response.data; // Token de autenticación
         } catch (error) {
-        throw new Error(`Error al iniciar sesión: ${error.response?.data?.message || error.message}`);
-        }
+            if (error.response) {
+                throw new HttpException(
+                    error.response.data?.detail || error.response.data?.message || 'Error externo',
+                    error.response.status,
+                    {
+                        cause: error,
+                        description: error.response.data?.detail,
+                    }
+                );
+    }
+    throw new HttpException(
+        error.message || 'Error interno',
+        500
+    );
+}
     }
 
     // Actualizar un usuario por ID
