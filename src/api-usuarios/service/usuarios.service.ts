@@ -109,7 +109,7 @@ export class UsuariosService {
     async verificarToken(token: string): Promise<{ valid: boolean; user_id: string }> {
         try {
         const response = await lastValueFrom(
-            this.httpService.post(`${this.authUrl}/verify-token`, { token }),
+            this.httpService.post(`${this.usersUrl}/verify-token`, { token }),
         );
         return response.data;
         } catch (error) {
