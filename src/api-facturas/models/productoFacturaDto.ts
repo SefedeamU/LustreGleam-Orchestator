@@ -1,26 +1,20 @@
-import { IsString, IsArray, IsNotEmpty, IsISO8601 } from 'class-validator';
+import { IsString, IsArray, IsNotEmpty, IsISO8601, IsInt, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ProductoFacturaDto {
-    @ApiProperty({ example: '123', description: 'Identificador del producto' })
-    @IsString()
-    @IsNotEmpty({ message: 'El identificador del producto no puede estar vacío' })
-    additionalProp1: string;
+    @ApiProperty({ example: 123, description: 'Identificador del producto' })
+    @IsInt()
+    id: number;
 
-    @ApiProperty({ example: 'valor1', description: 'Valor adicional 1' })
-    @IsString()
-    @IsNotEmpty({ message: 'El valor adicional no puede estar vacío' })
-    additionalProp2: string;
-
-    @ApiProperty({ example: 'valor2', description: 'Valor adicional 2' })
-    @IsString()
-    @IsNotEmpty({ message: 'El valor adicional no puede estar vacío' })
-    additionalProp3: string;
+    @ApiProperty({ example: 2, description: 'Cantidad de este producto' })
+    @IsInt()
+    @Min(1, { message: 'La cantidad debe ser al menos 1' })
+    cantidad: number;
 }
 
 export class FacturaDto {
-    @ApiProperty({ example: '1', description: 'ID del usuario' })
-    @IsString()
+    @ApiProperty({ example: 1, description: 'ID del usuario' })
+    @IsInt()
     @IsNotEmpty({ message: 'El ID del usuario no puede estar vacío' })
     usuario_id: string;
 
