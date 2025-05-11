@@ -25,6 +25,7 @@ export class FacturasService {
 
     // Crear una nueva factura
     async crearFactura(data: FacturaDto): Promise<any> {
+        console.log(this.facturaUrl);
         try {
         const response = await lastValueFrom(this.httpService.post(this.facturaUrl, data));
         return response.data;
