@@ -13,15 +13,7 @@ export class FacturasService {
             const API_FACTURAS = this.configService.get('API_FACTURAS');
             this.facturaUrl = `${API_FACTURAS}/factura`;
         }
-    // Listar todas las facturas
-    async listarFacturas(): Promise<any> {
-        try {
-        const response = await lastValueFrom(this.httpService.get(this.facturaUrl));
-        return response.data;
-        } catch (error) {
-        throw new Error(`Error al listar facturas: ${error.response?.data?.message || error.message}`);
-        }
-    }
+   
 
     // Crear una nueva factura
     async crearFactura(data: FacturaDto): Promise<any> {
@@ -34,6 +26,16 @@ export class FacturasService {
         }
     }
 
+     // Listar todas las facturas
+    async listarFacturas(): Promise<any> {
+        try {
+        const response = await lastValueFrom(this.httpService.get(this.facturaUrl));
+        return response.data;
+        } catch (error) {
+        throw new Error(`Error al listar facturas: ${error.response?.data?.message || error.message}`);
+        }
+    }
+    
     // Obtener una factura por ID
     async obtenerFacturaPorId(facturaId: string): Promise<any> {
         try {
