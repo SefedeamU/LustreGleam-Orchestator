@@ -16,7 +16,7 @@ export class FacturaDto {
     @ApiProperty({ example: 1, description: 'ID del usuario' })
     @IsInt()
     @IsNotEmpty({ message: 'El ID del usuario no puede estar vacío' })
-    user_id: string;
+    user_id: number;
 
     @ApiProperty({ type: [ProductoFacturaDto], description: 'Lista de productos' })
     @IsArray()
