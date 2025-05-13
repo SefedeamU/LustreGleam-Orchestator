@@ -6,7 +6,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  app.enableCors({
+    origin: '*', // Permite todos los orígenes
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: '*', // Permite todos los headers
+    credentials: false,  // Cambia a true si necesitas enviar cookies/autenticación
+  });
   
   const config = new DocumentBuilder()
     .setTitle('API Orquestador')
