@@ -113,16 +113,27 @@ export class UsuariosService {
 
     
     // Verificar token con un guard
-    async verificarToken(token: string): Promise<{ valid: boolean; user_id: string }> {
-        console.log('Enviando a API externa:', { token });
+    async verificarToken(token: string, user_id: string): Promise<{ valid: boolean; user_id: string; role: string }> {
         try {
             const response = await lastValueFrom(
-                this.httpService.post(`${this.usersUrl}/verify-token`, { token })
+                this.httpService.post(`${this.usersUrl}/verify-token`, { token, user_id })
             );
             return response.data;
         } catch (error) {
-            console.error('Respuesta de error:', error.response?.data);
-            throw new Error(`Error al verificar el token: ${error.response?.data?.message || error.message}`);
+            if (error.response) {
+                throw new HttpException(
+                    error.response.data?.detail || error.response.data?.message || 'Error externo',
+                    error.response.status,
+                    {
+                        cause: error,
+                        description: error.response.data?.detail,
+                    }
+                );
+            }
+            throw new HttpException(
+                error.message || 'Error interno',
+                500
+            );
         }
     }
 }

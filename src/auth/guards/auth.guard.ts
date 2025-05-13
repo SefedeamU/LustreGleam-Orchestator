@@ -8,15 +8,19 @@ export class AuthGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const authHeader = request.headers['authorization'];
-        console.log('Auth Header:', authHeader);
-        console.log('Request Headers:', request.headers);
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             throw new UnauthorizedException('Token no proporcionado o inválido');
         }
         const token = authHeader.split(' ')[1];
-        const result = await this.usuariosService.verificarToken(token);
+
+        // Extrae el user_id del query, body o header según tu API
+        const user_id = request.query?.usuario_id || request.body?.user_id || request.headers['user_id'];
+        if (!user_id) {
+            throw new UnauthorizedException('user_id no proporcionado');
+        }
+
+        const result = await this.usuariosService.verificarToken(token, user_id);
         if (!result.valid) throw new UnauthorizedException('Token inválido o expirado');
-        // Puedes adjuntar el user_id al request para usarlo en los handlers
         request.user_id = result.user_id;
         return true;
     }
