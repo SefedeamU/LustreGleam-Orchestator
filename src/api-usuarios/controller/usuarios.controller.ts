@@ -39,7 +39,17 @@ export class UsuariosController {
         return this.usuariosService.iniciarSesion(data);
     }
 
-
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
+    @Get(':usuario_id')
+    @ApiOperation({ summary: 'Obtener usuario por ID' })
+    @ApiParam({ name: 'usuario_id', type: Number, description: 'ID del usuario' })
+    @ApiResponse({ status: 200, description: 'Usuario encontrado.' })
+    @ApiResponse({ status: 404, description: 'Usuario no encontrado.' })
+    async obtenerUsuarioPorId(@Param('usuario_id') usuario_id: number) {
+        return this.usuariosService.obtenerUsuarioPorId(usuario_id);
+    }
+    
     @ApiBearerAuth()
     @UseGuards(AuthGuard)
     @Put(':id')
