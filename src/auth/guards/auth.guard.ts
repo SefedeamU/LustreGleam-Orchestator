@@ -13,10 +13,14 @@ export class AuthGuard implements CanActivate {
         }
         const token = authHeader.split(' ')[1];
 
-        // Solo acepta user_id (en query, body o header)
-        const usuario_id = request.query?.usuarios_id || request.body?.usuario_id || request.headers['usuario_id'];
+        // Solo acepta usuario_id (en query, body o header)
+        const usuario_id =
+            request.query?.usuario_id ||
+            request.body?.usuario_id ||
+            request.headers['usuario_id'];
+
         if (!usuario_id) {
-            throw new UnauthorizedException('user_id no proporcionado');
+            throw new UnauthorizedException('usuario_id no proporcionado');
         }
 
         const result = await this.usuariosService.verificarToken(token, usuario_id);
