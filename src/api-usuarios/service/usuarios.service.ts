@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 
@@ -77,7 +77,7 @@ export class UsuariosService {
                 );
             }
         }
-        
+
     // Obtener usuario por ID
     async obtenerUsuarioPorId(usuario_id: number): Promise<any> {
         try {
@@ -86,7 +86,13 @@ export class UsuariosService {
             );
             return response.data;
         } catch (error) {
-            throw new Error(`Error al obtener el usuario con ID ${usuario_id}: ${error.response?.data?.message || error.message}`);
+            if (error.response?.status === 404) {
+                throw new NotFoundException(`Usuario con ID ${usuario_id} no encontrado`);
+            }
+            throw new HttpException(
+                error.response?.data?.message || error.message,
+                error.response?.status || 500
+            );
         }
     }
 
