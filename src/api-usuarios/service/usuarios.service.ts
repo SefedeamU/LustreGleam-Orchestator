@@ -113,10 +113,10 @@ export class UsuariosService {
 
     
     // Verificar token con un guard
-    async verificarToken(token: string, usuarios_id: string): Promise<{ valid: boolean; usuarios_id: string; role: string }> {
+    async verificarToken(token: string, usuario_id: string): Promise<{ valid: boolean; usuario_id: string; role: string }> {
         try {
             const response = await lastValueFrom(
-                this.httpService.post(`${this.usersUrl}/verify-token`, { token, usuarios_id })
+                this.httpService.post(`${this.usersUrl}/verify-token`, { token, usuario_id })
             );
             return response.data;
         } catch (error) {
