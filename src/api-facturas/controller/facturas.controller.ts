@@ -32,19 +32,19 @@ export class FacturasController {
         return this.facturasService.crearFactura(data);
     }
 
-    @Get()
     @ApiOperation({ summary: 'Listar todas las facturas' })
     @ApiQuery({ name: 'skip', required: false, type: Number, description: 'Cantidad de facturas a omitir' })
     @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Cantidad máxima de facturas a retornar' })
     @ApiQuery({ name: 'usuario_id', required: false, type: Number, description: 'Filtrar por ID de usuario' })
     @ApiResponse({ status: 200, description: 'Lista de facturas.' })
+    @Get()
     async listarFacturas(
         @Query('skip') skip?: number,
         @Query('limit') limit?: number,
         @Query('usuario_id') usuario_id?: number,
         @Req() req?
     ) {
-        return this.facturasService.listarFacturas();
+    return this.facturasService.listarFacturas(skip, limit, usuario_id);
     }
 
     @Get(':id')

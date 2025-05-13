@@ -27,12 +27,19 @@ export class FacturasService {
     }
 
      // Listar todas las facturas
-    async listarFacturas(): Promise<any> {
+    async listarFacturas(skip?: number, limit?: number, usuario_id?: number): Promise<any> {
+        const params: any = {};
+        if (typeof skip !== 'undefined') params.skip = skip;
+        if (typeof limit !== 'undefined') params.limit = limit;
+        if (typeof usuario_id !== 'undefined') params.usuario_id = usuario_id;
+
         try {
-        const response = await lastValueFrom(this.httpService.get(this.facturaUrl));
-        return response.data;
+            const response = await lastValueFrom(
+                this.httpService.get(this.facturaUrl, { params })
+            );
+            return response.data;
         } catch (error) {
-        throw new Error(`Error al listar facturas: ${error.response?.data?.message || error.message}`);
+            throw new Error(`Error al listar facturas: ${error.response?.data?.message || error.message}`);
         }
     }
     

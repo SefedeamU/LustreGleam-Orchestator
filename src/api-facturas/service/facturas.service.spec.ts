@@ -15,8 +15,13 @@ export class FacturasService {
         const API_FACTURAS = this.configService.get('API_FACTURAS');
         this.facturaUrl = `${API_FACTURAS}/factura`;
     }
+    
+    async listarFacturas(skip?: number, limit?: number, usuario_id?: number): Promise<any> {
+        const params: any = {};
+        if (typeof skip !== 'undefined') params.skip = skip;
+        if (typeof limit !== 'undefined') params.limit = limit;
+        if (typeof usuario_id !== 'undefined') params.usuario_id = usuario_id;
 
-    async listarFacturas(params?: { skip?: number; limit?: number; usuario_id?: number }): Promise<any> {
         try {
             const response = await lastValueFrom(
                 this.httpService.get(this.facturaUrl, { params })
