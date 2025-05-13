@@ -84,7 +84,7 @@ export class UsuariosService {
         
         try {
             const response = await lastValueFrom(
-                this.httpService.get(`${this.usersUrl}/users/${usuario_id}`)
+                this.httpService.get(`${this.usersUrl}/${usuario_id}`)
             );
             return response.data;
         } catch (error) {
