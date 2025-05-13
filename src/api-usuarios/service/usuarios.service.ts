@@ -15,7 +15,7 @@ export class UsuariosService {
     constructor(private readonly httpService: HttpService, private configService: ConfigService) {
         const API_USUARIOS = this.configService.get('API_USUARIOS');
         this.authUrl = `${API_USUARIOS}/auth`;
-        this.usersUrl = `${API_USUARIOS}/`;
+        this.usersUrl = `${API_USUARIOS}`;
     }
 
     private readonly authUrl : string;
@@ -84,7 +84,7 @@ export class UsuariosService {
         
         try {
             const response = await lastValueFrom(
-                this.httpService.get(`${this.usersUrl}/${usuario_id}`)
+                this.httpService.get(`${this.usersUrl}/users/${usuario_id}`)
             );
             return response.data;
         } catch (error) {
