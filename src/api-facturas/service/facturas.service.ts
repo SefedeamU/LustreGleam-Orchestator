@@ -13,7 +13,7 @@ export class FacturasService {
             const API_FACTURAS = this.configService.get('API_FACTURAS');
             this.facturaUrl = `${API_FACTURAS}/factura`;
         }
-   
+
 
     // Crear una nueva factura
     async crearFactura(data: FacturaDto): Promise<any> {

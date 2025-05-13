@@ -13,8 +13,8 @@ export class AuthGuard implements CanActivate {
         }
         const token = authHeader.split(' ')[1];
 
-        // Extrae el user_id del query, body o header según tu API
-        const user_id = request.query?.usuario_id || request.body?.user_id || request.headers['user_id'];
+        // Solo acepta user_id (en query, body o header)
+        const user_id = request.query?.user_id || request.body?.user_id || request.headers['user_id'];
         if (!user_id) {
             throw new UnauthorizedException('user_id no proporcionado');
         }
