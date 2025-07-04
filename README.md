@@ -5,8 +5,8 @@
 Este proyecto es un **API Gateway y Orquestador de microservicios** desarrollado con **NestJS** y **TypeScript**. Actúa como el punto de entrada único para una arquitectura de e-commerce, gestionando la comunicación entre los diferentes servicios backend y aplicando una capa de seguridad centralizada.
 
 Este servicio es una pieza clave dentro de una suite de microservicios que incluye:
-*   [Microservicio de Productos (Java & Spring WebFlux)]([https://github.com/tu-usuario/repo-productos](https://github.com/SefedeamU/LustreGleam-Orchestator.git))
-*   [Microservicio de Autenticación (Python & FastAPI)]([https://github.com/tu-usuario/repo-autenticacion](https://github.com/SefedeamU/Ghosts-AuthUserAPI.git))
+*   [Microservicio de Productos (Java & Spring WebFlux)](https://github.com/SefedeamU/LustreGleamOrchestator.git)
+*   [Microservicio de Autenticación (Python & FastAPI)](https://github.com/SefedeamU/Ghosts-AuthUserAPI.git)
 *   _Microservicio de Facturación aún en proceso_
 
 ---
