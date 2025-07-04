@@ -96,4 +96,4 @@ Para facilitar las pruebas y la interacción con la API, se incluye una colecci�
 
 ## ✍️ Autor
 
-*   **[Tu Nombre]** - [tu-usuario-de-github](https://github.com/tu-usuario)
+*   **Sergio Delgado Amado** - [SefedeamU](https://github.com/SefedeamU)
