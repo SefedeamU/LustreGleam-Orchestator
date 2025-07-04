@@ -1,98 +1,99 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Microservicio Orquestador y API Gateway (NestJS)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este proyecto es un **API Gateway y Orquestador de microservicios** desarrollado con **NestJS** y **TypeScript**. Actúa como el punto de entrada único para una arquitectura de e-commerce, gestionando la comunicación entre los diferentes servicios backend y aplicando una capa de seguridad centralizada.
 
-## Description
+Este servicio es una pieza clave dentro de una suite de microservicios que incluye:
+*   [Microservicio de Productos (Java & Spring WebFlux)](https://github.com/tu-usuario/repo-productos)
+*   [Microservicio de Autenticación (Python & FastAPI)](https://github.com/tu-usuario/repo-autenticacion)
+*   _(Opcional: Enlace al microservicio de facturación)_
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🎯 Rol y Responsabilidades del Servicio
 
-```bash
-$ npm install
-```
+El objetivo de este microservicio es doble:
 
-## Compile and run the project
+1.  **Orquestador:** Centraliza y simplifica las operaciones que requieren la colaboración de múltiples servicios. Por ejemplo, al crear una factura, este servicio se comunica internamente con el microservicio de usuarios y el de productos para obtener la información necesaria.
+2.  **API Gateway:** Actúa como una fachada única para el frontend u otros clientes, ocultando la complejidad de la arquitectura distribuida. Es responsable de:
+    *   **Enrutamiento Inteligente:** Dirigir las peticiones entrantes al microservicio correcto.
+    *   **Seguridad Centralizada:** Aplicar políticas de autenticación y autorización.
+    *   **Manejo de Errores Unificado:** Capturar y transformar errores de los servicios internos en respuestas consistentes para el cliente.
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## ✨ Características Principales
 
-# production mode
-$ npm run start:prod
-```
+*   **Arquitectura Modular con NestJS:** El código está organizado en módulos de dominio (facturas, usuarios, productos) para una máxima mantenibilidad y escalabilidad.
+*   **Seguridad Robusta con Guards:** Se utilizan **Guards de NestJS** para implementar una lógica de autorización centralizada, protegiendo rutas críticas basadas en roles de usuario (`user`/`admin`) y en la propiedad de los recursos.
+*   **Contenerización con Docker:** La aplicación está completamente contenerizada, y se utilizan **redes de Docker** para gestionar una comunicación segura y eficiente entre los microservicios en un entorno aislado.
+*   **Manejo de Errores Resiliente:** Diseñado para capturar fallos de los servicios subyacentes y devolver respuestas de error HTTP claras y estandarizadas, mejorando la robustez del sistema.
+*   **Contratos de Datos (DTOs):** Uso de Data Transfer Objects (DTOs) con `class-validator` y `class-transformer` para garantizar la integridad y validación de los datos en todas las peticiones.
+*   **Calidad de Código:** Configurado con ESLint y Prettier para asegurar un estilo de código consistente y limpio.
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## 🛠️ Stack Tecnológico
 
-# e2e tests
-$ npm run test:e2e
+*   **Framework:** NestJS
+*   **Lenguaje:** TypeScript
+*   **Entorno de Ejecución:** Node.js
+*   **Contenerización:** Docker & Docker Compose
+*   **Herramientas de Testing API:** Postman
 
-# test coverage
-$ npm run test:cov
-```
+---
 
-## Deployment
+## 🚀 Cómo Ejecutar el Proyecto
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Para levantar este microservicio, es necesario tener los otros servicios de la arquitectura corriendo en la misma red de Docker.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Requisitos Previos
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+*   [Docker](https://www.docker.com/get-started) y [Docker Compose](https://docs.docker.com/compose/install/) instalados.
+*   Los microservicios de `usuarios` y `productos` deben estar ejecutándose.
+*   Una red de Docker compartida creada. Si no existe, puedes crearla con:
+    ```sh
+    docker network create mi-red-ecommerce
+    ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Pasos para el Despliegue
 
-## Resources
+1.  **Clona el repositorio:**
+    ```sh
+    git clone https://github.com/tu-usuario/repo-orquestador.git
+    cd repo-orquestador
+    ```
 
-Check out a few resources that may come in handy when working with NestJS:
+2.  **Configura las variables de entorno:**
+    Crea un archivo `.env` en la raíz del proyecto a partir del archivo `.env.example`. Este archivo debe contener las URLs de los otros microservicios.
+    ```env
+    # .env
+    PORT=3000
+    USERS_API_URL=http://servicio-usuarios:8001
+    PRODUCTS_API_URL=http://servicio-productos:8002
+    ```
+    *Nota: Los nombres de host (`servicio-usuarios`, `servicio-productos`) deben coincidir con los nombres de los servicios definidos en los archivos `docker-compose.yml` de los otros proyectos.*
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+3.  **Construye y levanta el contenedor:**
+    Asegúrate de que tu `docker-compose.yml` conecte este servicio a la red compartida.
+    ```sh
+    docker-compose up --build -d
+    ```
 
-## Support
+4.  **¡Listo!**
+    El API Gateway estará disponible en `http://localhost:3000`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## 📄 Colección de Postman
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Para facilitar las pruebas y la interacción con la API, se incluye una colección de Postman en el repositorio.
 
-## License
+*   Puedes importar el archivo `[nombre-de-tu-coleccion].postman_collection.json` directamente en Postman para tener acceso a todos los endpoints preconfigurados.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## ✍️ Autor
+
+*   **[Tu Nombre]** - [tu-usuario-de-github](https://github.com/tu-usuario)
